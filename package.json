@@ -1,0 +1,8 @@
+{
+  "name": "st-andrew-carpool-board",
+  "version": "1.0.0",
+  "description": "Parish Ride Sharing board",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=18" }
+}

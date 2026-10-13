@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>St. Andrew Carpool Board</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&family=Public+Sans:wght@400;500;600&display=swap">
+<style>
+[hidden]{display:none!important}
+:root{--bg:#f3f2ef;--card:#fff;--fg:#1e2430;--muted:#5d6574;--line:#dcdad4;--accent:#1f3a63;--accent-fg:#fff;--chip:#e6ecf5;--err:#a42a2a;--ok:#1f6b45;
+--display:"Source Serif 4",Georgia,serif;--body:"Public Sans",system-ui,sans-serif}
+@media (prefers-color-scheme:dark){:root{--bg:#14171d;--card:#1d222b;--fg:#e8eaee;--muted:#9aa3b2;--line:#2c3340;--accent:#9db8e6;--accent-fg:#14171d;--chip:#27324a;--err:#ff9b9b;--ok:#8fdcb0;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.5;padding:28px 16px 40px}
+main{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+h1{font-family:var(--display);font-size:clamp(28px,7vw,38px);line-height:1.1;margin:6px 0 10px;text-wrap:balance}
+h2{font-family:var(--display);font-size:24px;margin:0 0 4px}
+.lede{color:var(--muted);margin:0}
+.choices{display:flex;flex-direction:column;gap:14px}
+.choice{display:flex;flex-direction:column;gap:4px;text-align:left;font:inherit;background:var(--accent);color:var(--accent-fg);border:2px solid var(--accent);border-radius:14px;padding:22px 20px;cursor:pointer;width:100%}
+.choice b{font-family:var(--display);font-size:24px}
+.choice span{opacity:.85;font-size:15px}
+.choice.alt{background:var(--card);color:var(--fg)}
+.back{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:4px 0;align-self:flex-start}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+header{text-align:center}
+#submit{align-self:center;min-width:240px;justify-content:center;padding:16px 32px;font-size:18px;min-height:58px;border-radius:14px}
+.choice[data-home]{align-items:center}
+.list{display:flex;flex-direction:column;gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:start}
+.name{font-family:var(--display);font-weight:700;font-size:20px}
+.when{font-weight:600;color:var(--accent);text-align:right;font-variant-numeric:tabular-nums}
+.from{color:var(--muted);font-size:14px}
+.today{justify-self:end;font-size:12px;background:var(--accent);color:var(--accent-fg);border-radius:99px;padding:1px 9px;font-weight:600}
+.contact{grid-column:1/-1;margin-top:10px;padding-top:10px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.num{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.btn{font:inherit;font-size:14px;font-weight:600;background:var(--accent);color:var(--accent-fg);border:0;border-radius:8px;padding:9px 14px;cursor:pointer;text-decoration:none;min-height:40px;display:inline-flex;align-items:center}
+.btn.ghost{background:var(--chip);color:var(--accent)}
+.empty{background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:24px;text-align:center;color:var(--muted)}
+form{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:16px}
+label{font-weight:600;font-size:15px;display:flex;flex-direction:column;gap:6px}
+label small{font-weight:400;color:var(--muted)}
+input,select{font:inherit;font-size:16px;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:11px 12px;width:100%;min-height:46px}
+.hp{position:absolute;left:-9999px}
+.err{color:var(--err);font-weight:600;margin:0;min-height:1.2em}
+.done{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:12px}
+.done h2{color:var(--ok)}
+.note{font-size:14px;color:var(--muted);margin:0}
+.disc{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;margin:0}
+</style>
+</head>
+<body>
+<main>
+<header>
+<div class="eyebrow">St. Andrew Orthodox Church &middot; Riverside</div>
+<h1>Parish Ride Sharing</h1>
+<p class="lede">Members of our parish helping one another get to church!</p>
+</header>
+
+<section id="home" class="choices">
+<p class="lede" style="text-align:left">This volunteer-led initiative has been established to help connect parishioners who need transportation with those willing to offer a ride, as well as those who simply wish to carpool, share travel expenses, and enjoy fellowship along the way. Participation is optional.</p>
+<p class="lede" style="text-align:left">While parish volunteers provide and maintain the sign-up system, all ride arrangements are made directly between participating parishioners. Each participant is responsible for communicating and coordinating with each other regarding scheduling, changes, cancellations, or any other practical matters related to their ride.</p>
+<button class="choice" id="goRides"><b>Seeking A Ride</b><span>See who is driving and from where</span></button>
+<button class="choice alt" id="goDrive"><b>Offering A Ride</b><span>Add yourself in under a minute</span></button>
+</section>
+
+<section id="rides" hidden>
+<button class="choice alt" data-home><b>&larr; Back</b></button>
+<h2>Seeking A Ride</h2>
+<p class="lede" style="margin-bottom:14px">Call or text a driver whose city and date fit. Work out the details with them.</p>
+<div class="list" id="list" aria-live="polite"></div>
+</section>
+
+<section id="drive" hidden>
+<button class="choice alt" data-home><b>&larr; Back</b></button>
+<h2>Offering A Ride</h2>
+<p class="lede" style="margin-bottom:14px">Your name, city, date and phone number will be visible to everyone who opens this page.</p>
+<form id="form" novalidate>
+<label>Your name <small>First name and last initial</small><input id="name" autocapitalize="words" autocomplete="given-name" maxlength="40" required></label>
+<label>City you are coming from<select id="city"></select></label>
+<label id="otherWrap" hidden>Type your city<input id="other" maxlength="40"></label>
+<label>Date you are driving to church<input id="date" type="date" required></label>
+<label>Phone Number <small>Text or call</small><input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(951) 555-0100" maxlength="20" required></label>
+<input class="hp" id="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+<p class="err" id="err" role="alert"></p>
+<button class="btn" id="submit" type="submit">Add me to the board</button>
+</form>
+</section>
+
+<section id="done" class="done" hidden>
+<h2>You are on the board</h2>
+<p style="margin:0">Riders can now text or call you. Your listing disappears after your date.</p>
+<div class="btns"><button class="btn" id="seeBoard">See the board</button><button class="btn ghost" id="removeMe">Remove my listing</button></div>
+<p class="note" id="removeNote" hidden></p>
+</section>
+
+<p class="disc"><b>Please note:</b> While this effort is under the pastoral oversight of the parish, it is not administered by the clergy or the Saint Andrew parish office. All ride-related arrangements and logistical concerns are the responsibility of the participating parties and should be addressed between each other, rather than directed to the priests or parish office.</p>
+<p class="disc" style="border-top:0;padding-top:0">St. Andrew Orthodox Church, its clergy, staff and volunteers are not responsible for any arrangements, vehicles, drivers, riders, schedules, costs, injuries, damages or losses. Ride at your own discretion, drive with love and arrange details directly with each other.</p>
+<p class="disc" style="border-top:0;padding-top:0">Questions, problems or suggestions for the volunteer organizers? <a href="#" id="contactLink" style="color:inherit;font-weight:600">Contact the organizers</a> <span id="contactAddr" hidden style="font-weight:600;user-select:all"></span></p>
+<script>
+(function(){var l=document.getElementById("contactLink"),s=document.getElementById("contactAddr");if(!l)return;
+var a=["tucker77","gmail.com"].join(String.fromCharCode(64));
+l.addEventListener("click",function(e){e.preventDefault();s.textContent=a;s.hidden=false;try{window.location.href="mailto:"+a+"?subject="+encodeURIComponent("Parish Ride Sharing")}catch(x){}});})();
+</script>
+</main>
+<script>
+(function(){
+var API="api/drivers";
+var CITIES=["Riverside","Corona","Moreno Valley","Jurupa Valley","Norco","Perris","Menifee","Murrieta","Temecula","Lake Elsinore","Redlands","Loma Linda","Colton","Rialto","San Bernardino","Fontana","Ontario","Rancho Cucamonga","Yucaipa","Beaumont","Banning","Other (type it)"];
+var $=function(i){return document.getElementById(i)};
+var views=["home","rides","drive","done"];
+function getMine(){try{return JSON.parse(localStorage.getItem("carpool-mine2")||"[]")}catch(e){return[]}}
+function addMine(m){try{var a=getMine();a.push(m);localStorage.setItem("carpool-mine2",JSON.stringify(a))}catch(e){}}
+function dropMine(id){try{localStorage.setItem("carpool-mine2",JSON.stringify(getMine().filter(function(x){return x.id!==id})))}catch(e){}}
+function removeMine(m){return fetch(API+"/"+m.id+"?token="+encodeURIComponent(m.token),{method:"DELETE"}).then(function(){dropMine(m.id)})}
+function show(v){views.forEach(function(x){$(x).hidden=x!==v});window.scrollTo(0,0);if(v==="rides")loadList()}
+function esc(s){var d=document.createElement("div");d.textContent=s;return d.innerHTML}
+function ymd(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+
+document.querySelectorAll("[data-home]").forEach(function(b){b.onclick=function(){show("home")}});
+$("goRides").onclick=function(){show("rides")};
+$("goDrive").onclick=function(){$("err").textContent="";show("drive")};
+$("seeBoard").onclick=function(){show("rides")};
+
+// form setup
+$("city").innerHTML='<option value="">Choose your city</option>'+CITIES.map(function(c){return "<option>"+esc(c)+"</option>"}).join("");
+$("city").onchange=function(){$("otherWrap").hidden=this.value.indexOf("Other")!==0};
+var t=new Date();$("date").min=ymd(t);$("date").max=ymd(new Date(t.getTime()+90*864e5));
+// default to next Sunday
+var nx=new Date(t);nx.setDate(t.getDate()+((7-t.getDay())%7||7));$("date").value=ymd(nx);
+
+$("form").onsubmit=function(e){
+  e.preventDefault();$("err").textContent="";
+  var city=$("city").value;if(city.indexOf("Other")===0)city=$("other").value;
+  var btn=$("submit");btn.disabled=true;btn.textContent="Adding...";
+  fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:$("name").value,city:city,date:$("date").value,phone:$("phone").value,website:$("website").value})})
+  .then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j}})})
+  .then(function(x){
+    btn.disabled=false;btn.textContent="Add me to the board";
+    if(!x.ok){$("err").textContent=x.j.error||"Something went wrong. Please try again.";return}
+    addMine({id:x.j.id,token:x.j.token});
+    window._mine=x.j;$("removeNote").hidden=true;$("removeMe").hidden=false;
+    $("form").reset();$("date").value=ymd(nx);$("otherWrap").hidden=true;show("done");
+  }).catch(function(){btn.disabled=false;btn.textContent="Add me to the board";$("err").textContent="Could not reach the board. Check your connection and try again."});
+};
+$("removeMe").onclick=function(){
+  var m=window._mine;if(!m){try{m=JSON.parse(localStorage.getItem("carpool-mine"))}catch(e){}}
+  if(!m)return;
+  fetch(API+"/"+m.id+"?token="+encodeURIComponent(m.token),{method:"DELETE"}).then(function(r){
+    dropMine(m.id);
+    $("removeNote").hidden=false;$("removeNote").textContent=r.ok?"Your listing was removed.":"That listing was already removed.";$("removeMe").hidden=true;
+  });
+};
+
+function card(d){
+  var today=ymd(new Date())===d.date,dt=new Date(d.date+"T12:00:00");
+  var el=document.createElement("article");el.className="card";
+  var tel=d.phone.replace(/\D/g,"");
+  el.innerHTML='<div class="name">'+esc(d.name)+'</div><div class="when">'+esc(dt.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"}))+'</div>'
+   +'<div class="from">Driving from '+esc(d.city)+'</div><div>'+(today?'<span class="today">Today</span>':'')+'</div>'
+   +'<div class="contact"><span class="num">'+esc(d.phone)+'</span><span class="btns"><a class="btn" href="tel:'+tel+'">Call</a><a class="btn ghost" href="sms:'+tel+'">Text</a></span></div>';
+  var m=getMine().filter(function(x){return x.id===d.id})[0];
+  if(m){var rb=document.createElement("button");rb.className="btn ghost";rb.textContent="Remove mine";rb.onclick=function(){rb.disabled=true;removeMine(m).then(loadList)};el.querySelector(".btns").appendChild(rb)}
+  return el;
+}
+function loadList(){
+  var L=$("list");L.innerHTML='<div class="empty">Loading...</div>';
+  fetch(API,{cache:"no-store"}).then(function(r){return r.json()}).then(function(a){
+    L.innerHTML="";
+    if(!a.length){L.innerHTML='<div class="empty">No drivers are listed right now. Check back soon, or go back and add yourself if you can drive.</div>';return}
+    a.forEach(function(d){L.appendChild(card(d))});
+  }).catch(function(){L.innerHTML='<div class="empty">Could not load the board. Please try again.</div>'});
+}
+})();
+</script>
+</body>
+</html>
